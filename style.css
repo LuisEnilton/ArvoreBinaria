@@ -1,0 +1,30 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+}
+
+header{
+    height: 100px;
+    color:black;
+    text-align: center;
+}
+.nivel{
+    display: grid;
+    grid-template-columns: repeat(1,20px);
+    grid-template-rows: repeat(1,20px);
+    height: 60px;
+    justify-content: space-evenly;
+}
+
+.node{
+    height: 20px;
+    width: 20px;
+    background-color: aqua;
+    border-radius: 50px;
+    text-align: center;
+    border: 1px solid black;
+    
+}
+
