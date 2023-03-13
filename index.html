@@ -7,16 +7,44 @@
     <title>Arvore Binária</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body >
     <header>
         <h1>Arvore binária</h1>
     </header>
-   <form class="entrada"action="" method="get">
-        <label for="" >input
-            <input type="text" name="" id="meuInput">
-        </label>
-   </form>
-    
+   <div class="conteudo">
+      
+    <div class="sidebar">
+           <form class="entrada">
+                <label for="" >input
+                    <input type="text" name="" id="meuInput">
+                </label>
+           </form>
+           
+            <button class="meuBotao" data-texto="Tamanho da arvore">
+                <span>Tamanho da arvore</span>
+              </button>
+           
+           
+            <button class="meuBotao" data-texto="Altura da arvore">
+                <span>Altura</span>
+              </button class="meuBotao" data-texto="Menor Elemento">
+           
+            <button class="meuBotao" data-texto="Menor Elemento">
+                <span>Menor Elemento</span>
+            </button>
+           
+            <button class="meuBotao" data-texto="Maior Elemento">
+                <span>Maior Elemento</span>
+              </button>
+           </form>
+       </div>
+       <div id="minhaTela">
+        <h1 class="tituloResposta"></h1>
+        <button id="botaoFechar">X</button>
+        <span class="resposta"></span> 
+      </div> 
+       <canvas id="canvas" width="1402" height="802" ></canvas>
+   </div>
     <script  src="script.js"></script>
 </body>
 </html>
