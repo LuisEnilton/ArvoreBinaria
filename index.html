@@ -14,12 +14,10 @@
    <div class="conteudo">
       
     <div class="sidebar">
-           <form class="entrada">
-                <label for="" >input
-                    <input type="text" name="" id="meuInput">
-                </label>
-           </form>
-           
+        <button class="meuBotao" data-texto="Inserir">
+            <span>Inserir novo Elemento</span>
+          </button>
+                    
             <button class="meuBotao" data-texto="Tamanho da arvore">
                 <span>Tamanho da arvore</span>
               </button>
@@ -36,14 +34,20 @@
             <button class="meuBotao" data-texto="Maior Elemento">
                 <span>Maior Elemento</span>
               </button>
-           </form>
+            <button class="meuBotao" data-texto="Comprimento Interno">
+                <span>Comprimento Interno</span>
+              </button>
+           
        </div>
        <div id="minhaTela">
         <h1 class="tituloResposta"></h1>
         <button id="botaoFechar">X</button>
         <span class="resposta"></span> 
+        <form class="entrada" action="">
+            <input type="text" name="" id="meuInput">
+        </form>
       </div> 
-       <canvas id="canvas" width="1402" height="802" ></canvas>
+       <canvas id="canvas" width="786.76" height="802" ></canvas>
    </div>
     <script  src="script.js"></script>
 </body>

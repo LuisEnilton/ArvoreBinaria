@@ -38,7 +38,7 @@ class No {
         noAtual = noAtual.pai;
         distancia++;
       }
-  
+      console.log(distancia);
       return distancia - 1;
     }
   }
@@ -107,8 +107,38 @@ class No {
         const alturaDireita = this.altura(noAtual.direita);
         
         return Math.max(alturaEsquerda, alturaDireita) + 1;
-      }  
-    pegarMinimo() {
+      } 
+      comprimentoInterno() {
+        if (this.raiz === null) {
+          return 0;
+        }
+      
+        let somaComprimentos = 0;
+        let nivelAtual = 0;
+        let fila = [{ no: this.raiz, nivel: 0 }];
+      
+        while (fila.length > 0) {
+          const { no, nivel } = fila.shift();
+      
+          if (nivelAtual !== nivel) {
+            nivelAtual = nivel;
+          }
+      
+          if (no.esquerda !== null) {
+            fila.push({ no: no.esquerda, nivel: nivel + 1 });
+            somaComprimentos += nivel + 1;
+          }
+      
+          if (no.direita !== null) {
+            fila.push({ no: no.direita, nivel: nivel + 1 });
+            somaComprimentos += nivel + 1;
+          }
+        }
+      
+        return somaComprimentos;
+      }
+    
+      pegarMinimo() {
       if(this.raiz === null) {
         return -1;
       }
@@ -165,11 +195,13 @@ function  transformarCoordenadas(origem,coordenada){
   }
   let x1 = ((origem.x)/2**(coordenada.y)+((origem.x)/2**(coordenada.y-1))*(coordenada.x));
   let y1 = ((origem.y)+2*(origem.y)*(coordenada.y));
+  
   return {x: x1, y: y1};
 }
  function PegarCoordenadaDoPai(coordenada){
   let x= ((coordenada.x) - ((coordenada.x) % 2)) /2; 
   let y = coordenada.y-1;
+  
   return {x: x, y: y};
  } 
 
@@ -188,27 +220,28 @@ document.querySelector('.entrada').addEventListener('submit', (event) => {
   largura=canvas.width;
   var ctx = canvas.getContext('2d');
   ctx.fillStyle = 'green'
-  ctx.font = '20px serif';
+  ctx.font = '15px serif';
   sequencia_coord = arvore.sequenciaArvore(arvore);
   console.log(sequencia_coord);
-  raio = 50;
+  raio = 30;
   const origem = {x : largura/2,y : raio};
-  ctx.arc(origem.x, origem.y, raio, 0, Math.PI * 2, true); // Círculo exterior
-  ctx.strokeText(sequencia_coord[0].valor, origem.x-raio,origem.y );
-  console.log(origem);
-  for(var i = 1; i<sequencia_coord.length;i++){
+  //ctx.arc(origem.x, origem.y, raio, 0, Math.PI * 2, true); // Círculo exterior
+  //ctx.strokeText(sequencia_coord[0].valor, origem.x-raio,origem.y );
+  for(var i = 0; i<sequencia_coord.length;i++){
     let coordenadas_px = transformarCoordenadas(origem,sequencia_coord[i].coordenada)
-    console.log(coordenadas_px)
     ctx.beginPath();
     ctx.moveTo(coordenadas_px.x+raio,coordenadas_px.y);
     ctx.arc(coordenadas_px.x, coordenadas_px.y, raio, 0, Math.PI * 2, true);
     ctx.fill();
+    ctx.stroke();
+    ctx.strokeText(sequencia_coord[i].valor, coordenadas_px.x-raio,coordenadas_px.y )
+    if(i == 0) continue;
     coordenada_pai = PegarCoordenadaDoPai(sequencia_coord[i].coordenada);
     let coordenada_pai_px = transformarCoordenadas(origem,coordenada_pai);
     ctx.moveTo(coordenadas_px.x,coordenadas_px.y);
     ctx.lineTo(coordenada_pai_px.x,coordenada_pai_px.y);
     ctx.stroke();
-    ctx.strokeText(sequencia_coord[i].valor, coordenadas_px.x-raio,coordenadas_px.y );
+    //ctx.strokeText(sequencia_coord[i].valor, coordenadas_px.x-raio,coordenadas_px.y );
   }
   ctx.stroke();
 });
@@ -225,17 +258,30 @@ botoes.forEach(function(botao) {
     minhaTela.style.display = 'block';
     const texto = botao.getAttribute('data-texto');
     switch (texto) {
+      case 'Inserir':
+        resposta.innerHTML = ` Insira um nome:`;
+        document.querySelector('.entrada').style.display='block';  
+      break;
       case 'Tamanho da arvore':
-        resposta.innerHTML = ` ${arvore.n} nós`
+        resposta.innerHTML = ` ${arvore.n} nós`;
+        document.querySelector('.entrada').style.display='none';
         break;
       case 'Altura da arvore':
-        resposta.innerHTML = `${arvore.altura()}`
+        resposta.innerHTML = `${arvore.altura()}`;
+        document.querySelector('.entrada').style.display='none';
         break;
       case 'Menor Elemento':  
-        resposta.innerHTML = `${arvore.pegarMinimo().valor}`
+        resposta.innerHTML = `${arvore.pegarMinimo().valor}`;
+        document.querySelector('.entrada').style.display='none';
         break;
       case 'Maior Elemento':  
-      resposta.innerHTML = `${arvore.pegarMaximo().valor}`
+        resposta.innerHTML = `${arvore.pegarMaximo().valor}`;
+        document.querySelector('.entrada').style.display='none';
+        break;
+      case 'Comprimento Interno':  
+        resposta.innerHTML = `${arvore.comprimentoInterno()}`;
+        document.querySelector('.entrada').style.display='none';
+        break;
     }
     tituloExibido.textContent = texto;
   });
