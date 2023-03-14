@@ -184,6 +184,55 @@ class No {
       
       return resultado;
     }
+    emOrdem(no = this.raiz, resultado = "") {
+      if (no !== null) {
+        resultado = this.emOrdem(no.esquerda, resultado);
+        resultado += no.valor + " → ";
+        resultado = this.emOrdem(no.direita, resultado);
+      }
+      return resultado;
+    }
+    preOrdem(no = this.raiz, resultado = "") {
+      if (no !== null) {
+        resultado += no.valor + " → ";
+        resultado = this.preOrdem(no.esquerda, resultado);
+        resultado = this.preOrdem(no.direita, resultado);
+      }
+      return resultado;
+    }
+    posOrdem(no = this.raiz, resultado = "") {
+      if (no !== null) {
+        resultado = this.posOrdem(no.esquerda, resultado);
+        resultado = this.posOrdem(no.direita, resultado);
+        resultado += no.valor + " → ";
+      }
+      return resultado;
+    }
+    levelOrdem() {
+      let resultado = [];
+  
+      function visita(no, nivel) {
+        if (!no) {
+          return;
+        }
+  
+        if (!resultado[nivel]) {
+          resultado[nivel] = [];
+        }
+  
+        resultado[nivel].push(no.valor);
+  
+        visita(no.esquerda, nivel + 1);
+        visita(no.direita, nivel + 1);
+      }
+  
+      visita(this.raiz, 0);
+  
+      return resultado
+        .map((nivel) => nivel.join(" → "))
+        .filter((nivel) => nivel !== "")
+        .join(" → ");
+    }
     }
   //MAIN FUNCTION
 
@@ -256,32 +305,45 @@ botoes.forEach(function(botao) {
   botao.addEventListener('click', function() {
     console.log(botao);
     minhaTela.style.display = 'block';
+    document.querySelector('.botoesTravessia').style.display='none';
     const texto = botao.getAttribute('data-texto');
     switch (texto) {
       case 'Inserir':
+        canvas.style.display='none';
         resposta.innerHTML = ` Insira um nome:`;
-        document.querySelector('.entrada').style.display='block';  
-      break;
-      case 'Tamanho da arvore':
+        document.querySelector('.entrada').style.display='inline';  
+        break;
+        case 'Tamanho da arvore':
+        canvas.style.display='none';
         resposta.innerHTML = ` ${arvore.n} nós`;
         document.querySelector('.entrada').style.display='none';
         break;
-      case 'Altura da arvore':
-        resposta.innerHTML = `${arvore.altura()}`;
-        document.querySelector('.entrada').style.display='none';
-        break;
-      case 'Menor Elemento':  
-        resposta.innerHTML = `${arvore.pegarMinimo().valor}`;
-        document.querySelector('.entrada').style.display='none';
-        break;
-      case 'Maior Elemento':  
-        resposta.innerHTML = `${arvore.pegarMaximo().valor}`;
-        document.querySelector('.entrada').style.display='none';
-        break;
-      case 'Comprimento Interno':  
-        resposta.innerHTML = `${arvore.comprimentoInterno()}`;
-        document.querySelector('.entrada').style.display='none';
-        break;
+        case 'Altura da arvore':
+          canvas.style.display='none';
+          resposta.innerHTML = `${arvore.altura()}`;
+          document.querySelector('.entrada').style.display='none';
+          break;
+          case 'Menor Elemento':  
+          canvas.style.display='none';
+          resposta.innerHTML = `${arvore.pegarMinimo().valor}`;
+          document.querySelector('.entrada').style.display='none';
+          break;
+          case 'Maior Elemento':  
+            canvas.style.display='none';
+            resposta.innerHTML = `${arvore.pegarMaximo().valor}`;
+            document.querySelector('.entrada').style.display='none';
+            break;
+        case 'Comprimento Interno':  
+          canvas.style.display='none';
+          resposta.innerHTML = `${arvore.comprimentoInterno()}`;
+          document.querySelector('.entrada').style.display='none';
+          break;
+        case 'Travessias':  
+          canvas.style.display='none';
+          resposta.innerHTML = '';
+          document.querySelector('.botoesTravessia').style.display='flex';
+          document.querySelector('.entrada').style.display='none';
+          break;
     }
     tituloExibido.textContent = texto;
   });
@@ -289,10 +351,41 @@ botoes.forEach(function(botao) {
 
 botaoFechar.addEventListener('click', function() {
   minhaTela.style.display = 'none';
+  canvas.style.display='inline'
 });
 
+const botoesTravs = document.querySelectorAll('.butaoTravessia');
 
-  
+
+botoesTravs.forEach(function(botao){
+  botao.addEventListener('click', function() {
+    const travessia =botao.getAttribute('data-texto');
+    switch (travessia) {
+      case 'Em Ordem':
+        document.querySelector('.botoesTravessia').style.display='none';
+        resposta.innerHTML = `${arvore.emOrdem()}`;
+        break;
+      case 'Pré-Ordem':
+        document.querySelector('.botoesTravessia').style.display='none';
+        resposta.innerHTML = `${arvore.preOrdem()}`;
+        break;
+      case 'Pós-Ordem':
+        document.querySelector('.botoesTravessia').style.display='none';
+        resposta.innerHTML = `${arvore.posOrdem()}`;
+        break;
+      case 'Level-Ordem':
+        document.querySelector('.botoesTravessia').style.display='none';
+        resposta.innerHTML = `${arvore.levelOrdem()}`;
+        break;
+    
+      default:
+        break;
+    }  
+    tituloExibido.textContent = travessia;
+})
+})
+
+
    
   
   

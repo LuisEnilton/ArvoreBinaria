@@ -7,9 +7,21 @@ body {
 .entrada{
   display: none;
 }
+#meuInput{
+  height: 30px;
+  font-size: 20px;
+}
+.Enviar{
+  display: inline;
+  width: 80px;
+  height: 30px;
+  color: brown;
+  
+}
 .resposta{
-  font-size: 50px;
+  font-size: 35px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: block;
 }
 .conteudo{
     width: 100%;
@@ -26,12 +38,19 @@ body {
 #minhaTela {
     display: none;
     width:1230px;
-    height:802px;
+    height:302px;
     background-color: ivory;
+}
+.botoesTravessia{
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20%;
 }
 .tituloResposta{
   padding-top: 0px;
+  font-size: 45px;
 }
+
 #botaoFechar {
     margin-top: -72px;   
     margin-left: auto;
@@ -71,6 +90,7 @@ button{
       letter-spacing: 0.7px;
     }
 canvas{
+    
     display: inline;
     width: 1230px;
     height: 800px;
